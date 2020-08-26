@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 无悬</title>
+    <link>https://robot9.me/post/</link>
+    <description>Recent content in Posts on 无悬</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 01 Apr 2018 23:48:12 +0800</lastBuildDate>
+    
+	<atom:link href="https://robot9.me/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>春游石潭村</title>
+      <link>https://robot9.me/post/shitan-travel/</link>
+      <pubDate>Sun, 01 Apr 2018 23:48:12 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/shitan-travel/</guid>
+      <description>石潭村是安徽黄山歙县的一个小山村，地图上不起眼，实际上是个不错的风景点，比较原生态，人也不是很多，适合风光摄影，主要可以看的地方有：漫山的油</description>
+    </item>
+    
+    <item>
+      <title>海拉尔之行</title>
+      <link>https://robot9.me/post/hailar-travel/</link>
+      <pubDate>Sun, 13 Aug 2017 13:22:43 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/hailar-travel/</guid>
+      <description>今年团队的Outing选择了海拉尔，想体验一把大草原自驾游，海拉尔位于呼伦贝尔市，算很靠北的地方了，顺便能避避暑 路线选择的南线（如下图顺时针</description>
+    </item>
+    
+    <item>
+      <title>毕业旅行</title>
+      <link>https://robot9.me/post/graduation-travel/</link>
+      <pubDate>Thu, 18 Jun 2015 20:22:17 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/graduation-travel/</guid>
+      <description>临近毕业，学院组织了一波出游，选择了不算太远的凉山彝族自治州，400多km 凉山彝族算比较特殊的少数民族，直接从奴隶制社会变更到新中国的社会主</description>
+    </item>
+    
+    <item>
+      <title>3d Reconstruction Overview</title>
+      <link>https://robot9.me/post/3d-reconstruction-overview/</link>
+      <pubDate>Tue, 17 Feb 2015 12:32:02 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/3d-reconstruction-overview/</guid>
+      <description>这是我在知乎的一个回答，竟然还上了知乎日报~ 问题： 双眼可以测距和建立立体环境，双摄像头可以吗？ 回答： 本人研究生阶段主要做三维重建，简单写一些</description>
+    </item>
+    
+    <item>
+      <title>About Dimension</title>
+      <link>https://robot9.me/post/about-dimension/</link>
+      <pubDate>Fri, 21 Nov 2014 13:30:14 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/about-dimension/</guid>
+      <description>这是最近关于时空维度的一些思考(《星际穿越》电影挺不错) 0维-3维： 我们熟知的几何空间，分别对应点、直线、平面、立体 4维： 把三维空间作为一个</description>
+    </item>
+    
+    <item>
+      <title>峨眉山游记</title>
+      <link>https://robot9.me/post/e-mei-travel/</link>
+      <pubDate>Sun, 11 May 2014 22:46:30 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/e-mei-travel/</guid>
+      <description>来四川这么久了，之前都没去过峨眉山，决心去一次，考虑到五一人多，还是提前一周去比较稳妥，拉上几个本科同学，4月26号（周五）下午就出发啦！勉</description>
+    </item>
+    
+    <item>
+      <title>3d Reconstruction Test</title>
+      <link>https://robot9.me/post/3d-reconstruction-test/</link>
+      <pubDate>Tue, 18 Feb 2014 19:55:58 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/3d-reconstruction-test/</guid>
+      <description>做实验有一定时间了，虽然目前设备不是太好，研究得也还不够深入，不过还是能看到些希望了。放几张照片，现在是采用1投影仪1相机的方式，时间编码结</description>
+    </item>
+    
+    <item>
+      <title>Hello 3d Reconstruction</title>
+      <link>https://robot9.me/post/hello-3d-reconstruction/</link>
+      <pubDate>Fri, 05 Jul 2013 11:36:05 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/hello-3d-reconstruction/</guid>
+      <description>第一次接触3D Reconstruction，用的SFM方法，找到个牛人写的软件VisualSFM，这个软件强调了运算速度，包括SIFT算法的</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>3D on 无悬</title>
+    <link>https://robot9.me/tags/3d/</link>
+    <description>Recent content in 3D on 无悬</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 17 Feb 2015 12:32:02 +0800</lastBuildDate>
+    
+	<atom:link href="https://robot9.me/tags/3d/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>3d Reconstruction Overview</title>
+      <link>https://robot9.me/post/3d-reconstruction-overview/</link>
+      <pubDate>Tue, 17 Feb 2015 12:32:02 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/3d-reconstruction-overview/</guid>
+      <description>这是我在知乎的一个回答，竟然还上了知乎日报~ 问题： 双眼可以测距和建立立体环境，双摄像头可以吗？ 回答： 本人研究生阶段主要做三维重建，简单写一些</description>
+    </item>
+    
+    <item>
+      <title>3d Reconstruction Test</title>
+      <link>https://robot9.me/post/3d-reconstruction-test/</link>
+      <pubDate>Tue, 18 Feb 2014 19:55:58 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/3d-reconstruction-test/</guid>
+      <description>做实验有一定时间了，虽然目前设备不是太好，研究得也还不够深入，不过还是能看到些希望了。放几张照片，现在是采用1投影仪1相机的方式，时间编码结</description>
+    </item>
+    
+    <item>
+      <title>Hello 3d Reconstruction</title>
+      <link>https://robot9.me/post/hello-3d-reconstruction/</link>
+      <pubDate>Fri, 05 Jul 2013 11:36:05 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/hello-3d-reconstruction/</guid>
+      <description>第一次接触3D Reconstruction，用的SFM方法，找到个牛人写的软件VisualSFM，这个软件强调了运算速度，包括SIFT算法的</description>
+    </item>
+    
+  </channel>
+</rss>

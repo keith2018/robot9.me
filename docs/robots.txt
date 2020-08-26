@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://robot9.me/sitemap.xml
