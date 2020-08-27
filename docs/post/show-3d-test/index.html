@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>裸眼3D小实验 - 无悬</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="无悬" /><meta name="description" content="最近偶然看到篇3D显示的论文，感觉挺有意思，决定动手实现一下。 常见的一种裸眼3D是通过全息投影来实现，如： 即通过图像在半透明薄片上的投影来产" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://robot9.me/post/show-3d-test/" />
+
+<link href="/sass/main.min.849428b9b3d6417d6cf5f085bd40b255973573b5fdbfdb76daf86118546c7fde.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/main.css">
+
+
+<meta property="og:title" content="裸眼3D小实验" />
+<meta property="og:description" content="最近偶然看到篇3D显示的论文，感觉挺有意思，决定动手实现一下。 常见的一种裸眼3D是通过全息投影来实现，如： 即通过图像在半透明薄片上的投影来产" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://robot9.me/post/show-3d-test/" />
+<meta property="article:published_time" content="2018-07-02T22:54:08+08:00" />
+<meta property="article:modified_time" content="2018-07-02T22:54:08+08:00" />
+<meta itemprop="name" content="裸眼3D小实验">
+<meta itemprop="description" content="最近偶然看到篇3D显示的论文，感觉挺有意思，决定动手实现一下。 常见的一种裸眼3D是通过全息投影来实现，如： 即通过图像在半透明薄片上的投影来产">
+<meta itemprop="datePublished" content="2018-07-02T22:54:08+08:00" />
+<meta itemprop="dateModified" content="2018-07-02T22:54:08+08:00" />
+<meta itemprop="wordCount" content="1588">
+
+
+
+<meta itemprop="keywords" content="3D,技术," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="裸眼3D小实验"/>
+<meta name="twitter:description" content="最近偶然看到篇3D显示的论文，感觉挺有意思，决定动手实现一下。 常见的一种裸眼3D是通过全息投影来实现，如： 即通过图像在半透明薄片上的投影来产"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">无悬</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">无悬</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">裸眼3D小实验</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-02 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#结构光">结构光</a></li>
+            <li><a href="#post-process">Post Process</a></li>
+            <li><a href="#实验结果">实验结果</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>最近偶然看到篇3D显示的<a href="http://roxanneluo.github.io/PeppersCone.html">论文</a>，感觉挺有意思，决定动手实现一下。</p>
+<p>常见的一种裸眼3D是通过全息投影来实现，如：</p>
+<p><img src="/media/show-3d-test/e17dc9885251b8c54c7351551c11b5cf.png" alt=""></p>
+<p>即通过图像在半透明薄片上的投影来产生立体感，由于投影面是标准的平面，如果又正好是45°角，投影图像不需要做任何形变，实现起来比较简单，而这篇论文作者采用的是圆锥体：</p>
+<p><img src="/media/show-3d-test/00ff5a670712819310857bb662d02193.png" alt=""></p>
+<p>圆锥相比凌锥可以适应更大的观察角度，另外还可以放到旋转平台上，那么问题来了，对于圆锥，投影图像需要做怎样的形变呢？</p>
+<p><img src="/media/show-3d-test/3748c7de072ed271784ba3b82df7d29a.png" alt=""></p>
+<p>如果按数学公式算会相对复杂，特别是，DIY的圆锥不能保证是标准形状，很可能会扁一点，也不能保证正好垂直摆放，因而实际上我们需要假设它就是不标准的形状、不标准的姿态，那如何得到图像在这样曲面上投影的形变关系呢？结构光是一种不错的方法。
+Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建，获取物体表面形状信息。原理不难理解，向物体表面投射已知结构的光，然后拍摄图像，根据图像上结构的形变来计算物体表面(深度)信息，在这个实验里，我用的比较简单的格雷码结构光。</p>
+<h3 id="结构光">结构光</h3>
+<p>基本思路：将像素点的坐标(x，y)编码进光的结构，投影后拍摄图像，解码每个像素点(X, Y)的值，从而得到(x, y) -&gt; (X, Y)的映射关系图。格雷码结构光是时间编码方式，即投射多张图案，每张代表一个二进制bit，假如1024分辨率，就需要log2(1024)=10张图案来编码，而且对于x、y两个轴，需要在横纵方向投影两次。格雷码相比普通二进制码有一定优势，具体可参看 <a href="https://en.wikipedia.org/wiki/Gray_code">https://en.wikipedia.org/wiki/Gray_code</a></p>
+<p><img src="/media/show-3d-test/aa905c5cc729d7faa14b9ca33390944c.png" alt=""></p>
+<p>比如上图，Line1的码字就是00000，Line2是01110，解码后将格雷码转为二进制码，就得到该像素点的坐标值</p>
+<p>格雷码结构光生成的伪代码(x轴)：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">encodePattern</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">width</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">gray</span> <span class="o">=</span> <span class="n">binaryToGray</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>              <span class="c1">// 坐标x转为格雷码
+</span><span class="c1"></span>            <span class="kt">bool</span> <span class="n">one</span> <span class="o">=</span> <span class="p">(</span><span class="n">gray</span> <span class="o">&gt;&gt;</span> <span class="n">idx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">;</span>            <span class="c1">// 第idx位是否是1
+</span><span class="c1"></span>            <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">].</span><span class="n">color</span> <span class="o">=</span> <span class="n">one</span> <span class="o">?</span> <span class="nl">white</span> <span class="p">:</span> <span class="n">black</span><span class="p">;</span> <span class="c1">// 像素点颜色
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/media/show-3d-test/db7004920e45dd5eb4ada9b0afaedda0.png" alt=""></p>
+<p>解码的伪代码(x轴)：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">decodePattern</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">images</span><span class="p">.</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">width</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">bool</span> <span class="n">one</span> <span class="o">=</span> <span class="n">isPixelWhite</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]);</span> <span class="c1">// 判断该像素点编码为0还是1
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="n">one</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">pattern</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">|=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">idx</span><span class="p">;</span>               <span class="c1">// 第idx位赋1
+</span><span class="c1"></span>                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">width</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">pattern</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">grayToBinary</span><span class="p">(</span><span class="n">pattern</span><span class="p">);</span>          <span class="c1">// 格雷码转二进制
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>由于解码后的像素映射关系图需要用到3D渲染，我们将像素坐标值int型压缩到颜色rgba，即rg共16位表示x，ba共16位表示y，这样解码结果就变成了一张纹理贴图，从而方便后续的shader处理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">uchar</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">];</span>
+<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternX</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>       <span class="c1">// r
+</span><span class="c1"></span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternX</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>     <span class="c1">// g
+</span><span class="c1"></span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternY</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>       <span class="c1">// b
+</span><span class="c1"></span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternY</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>     <span class="c1">// a
+</span></code></pre></td></tr></table>
+</div>
+</div><p>最终得到的结果图如下，由于x、y压缩到r、g、b、a，所以图片看起来是有断纹的，实际坐标值是连续变化的。</p>
+<p><img src="/media/show-3d-test/a48990e5588a2aa4d25caab10ad3e6c7.png" alt=""></p>
+<p>结构光编解码实现具体见：<a href="https://github.com/keith2018/GrayCode">https://github.com/keith2018/GrayCode</a></p>
+<h3 id="post-process">Post Process</h3>
+<p>经过结构光的标定过程，我们得到了圆锥的形变映射关系图，并做成纹理贴图，下一步就是应用到3D渲染。这里我们使用Post Process技术，将原3D场景渲染到FrameBuffer，然后用shader来实现形变，最终输出形变后的3D画面。</p>
+<p>首先创建FrameBuffer</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">_frameBuffer</span> <span class="o">=</span> <span class="n">FrameBuffer</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&#34;PostProcess&#34;</span><span class="p">,</span> <span class="n">FRAMEBUFFER_WIDTH</span><span class="p">,</span> <span class="n">FRAMEBUFFER_HEIGHT</span><span class="p">);</span>
+<span class="n">DepthStencilTarget</span><span class="o">*</span> <span class="n">dst</span> <span class="o">=</span> <span class="n">DepthStencilTarget</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&#34;PostProcess&#34;</span><span class="p">,</span> <span class="n">DepthStencilTarget</span><span class="o">::</span><span class="n">DEPTH_STENCIL</span><span class="p">,</span> <span class="n">FRAMEBUFFER_WIDTH</span><span class="p">,</span> <span class="n">FRAMEBUFFER_HEIGHT</span><span class="p">);</span>
+<span class="n">_frameBuffer</span><span class="o">-&gt;</span><span class="n">setDepthStencilTarget</span><span class="p">(</span><span class="n">dst</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>然后创建后处理纹理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Material</span><span class="o">*</span> <span class="n">material</span> <span class="o">=</span> <span class="n">Material</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">materialPath</span><span class="p">);</span>
+<span class="n">Texture</span><span class="o">::</span><span class="n">Sampler</span><span class="o">*</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">Texture</span><span class="o">::</span><span class="n">Sampler</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">srcBuffer</span><span class="o">-&gt;</span><span class="n">getRenderTarget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getTexture</span><span class="p">());</span>
+<span class="n">material</span><span class="o">-&gt;</span><span class="n">getParameter</span><span class="p">(</span><span class="s">&#34;u_texture&#34;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">sampler</span><span class="p">);</span>
+
+<span class="n">Mesh</span><span class="o">*</span> <span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="o">::</span><span class="n">createQuadFullscreen</span><span class="p">();</span>
+<span class="n">_quadModel</span> <span class="o">=</span> <span class="n">Model</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">mesh</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>渲染过程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Rectangle</span> <span class="n">defaultViewport</span> <span class="o">=</span> <span class="n">getViewport</span><span class="p">();</span>
+
+<span class="c1">// draw into the framebuffer
+</span><span class="c1"></span><span class="n">setViewport</span><span class="p">(</span><span class="n">Rectangle</span><span class="p">(</span><span class="n">FRAMEBUFFER_WIDTH</span><span class="p">,</span> <span class="n">FRAMEBUFFER_HEIGHT</span><span class="p">));</span>
+<span class="n">FrameBuffer</span><span class="o">*</span> <span class="n">previousFrameBuffer</span> <span class="o">=</span> <span class="n">_frameBuffer</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">();</span>
+
+<span class="c1">// main scene
+</span><span class="c1"></span><span class="n">_scene</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">();</span>
+
+<span class="c1">// post process
+</span><span class="c1"></span><span class="n">setViewport</span><span class="p">(</span><span class="n">defaultViewport</span><span class="p">);</span>      
+<span class="n">previousFrameBuffer</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">();</span>
+
+<span class="n">clear</span><span class="p">(</span><span class="n">CLEAR_COLOR</span><span class="p">,</span> <span class="n">Vector4</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">_quadModel</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中用于形变映射的shader:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifdef OPENGL_ES
+</span><span class="cp"></span><span class="n">precision</span> <span class="n">highp</span> <span class="kt">float</span><span class="p">;</span>
+<span class="cp">#endif
+</span><span class="cp"></span>
+<span class="c1">// Uniforms
+</span><span class="c1"></span><span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">u_texture</span><span class="p">;</span>
+<span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">u_mapTexture</span><span class="p">;</span>
+
+<span class="c1">// Inputs
+</span><span class="c1"></span><span class="n">varying</span> <span class="n">vec2</span> <span class="n">v_texCoord</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">vec4</span> <span class="n">map</span> <span class="o">=</span> <span class="n">texture2D</span><span class="p">(</span><span class="n">u_mapTexture</span><span class="p">,</span> <span class="n">v_texCoord</span><span class="p">);</span>
+    <span class="n">vec2</span> <span class="n">mapUV</span> <span class="o">=</span> <span class="n">vec2</span><span class="p">((</span><span class="n">map</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="mf">256.0</span> <span class="o">+</span> <span class="n">map</span><span class="p">.</span><span class="n">g</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">,</span> <span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="n">r</span> <span class="o">*</span> <span class="mf">256.0</span> <span class="o">+</span> <span class="n">map</span><span class="p">.</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">);</span>
+    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">texture2D</span><span class="p">(</span><span class="n">u_texture</span><span class="p">,</span> <span class="n">mapUV</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>u_texture是3D场景正常渲染的画面，u_mapTexture是结构光解码后的像素映射图，mapUV的计算则是将rgba解压为x、y坐标(u、v)，如下左右分别是形变前和形变后的图像。</p>
+<p><img src="/media/show-3d-test/6f343e69e4dc63577c4fa502e85b9aeb.png" alt=""></p>
+<h3 id="实验结果">实验结果</h3>
+<p><img src="/media/show-3d-test/6e5970055c1605801564eff8996214ac.png" alt=""></p>
+<p>如上是最终实际的效果，由于使用iPad来投影，要求比较暗的环境才行，否则可能亮度不够。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">无悬</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2018-07-02
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/3d/">3D</a>
+          <a href="/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/shitan-travel/">
+            <span class="next-text nav-default">春游石潭村</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:keith@robot9.me" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/keith2018" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/robot9" class="iconfont icon-zhihu" title="zhihu"></a>
+  <a href="https://robot9.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2013 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">无悬</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

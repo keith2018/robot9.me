@@ -2,28 +2,49 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://robot9.me/tags/3d/</loc>
+    <lastmod>2018-07-02T22:54:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://robot9.me/post/</loc>
-    <lastmod>2018-04-01T23:48:12+08:00</lastmod>
+    <lastmod>2018-07-02T22:54:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://robot9.me/tags/</loc>
-    <lastmod>2018-04-01T23:48:12+08:00</lastmod>
+    <lastmod>2018-07-02T22:54:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://robot9.me/tags/%E6%97%85%E8%A1%8C/</loc>
-    <lastmod>2018-04-01T23:48:12+08:00</lastmod>
+    <loc>https://robot9.me/tags/%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2018-07-02T22:54:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://robot9.me/</loc>
+    <lastmod>2018-07-02T22:54:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://robot9.me/post/show-3d-test/</loc>
+    <lastmod>2018-07-02T22:54:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://robot9.me/tags/%E6%97%85%E8%A1%8C/</loc>
     <lastmod>2018-04-01T23:48:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -46,13 +67,6 @@
   <url>
     <loc>https://robot9.me/post/graduation-travel/</loc>
     <lastmod>2015-06-18T20:22:17+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://robot9.me/tags/3d/</loc>
-    <lastmod>2015-02-17T12:32:02+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

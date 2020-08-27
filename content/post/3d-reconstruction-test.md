@@ -2,7 +2,7 @@
 title = "3d Reconstruction Test"
 date = 2014-02-18T19:55:58+08:00
 images = []
-tags = ["3D"]
+tags = ["3D", "技术"]
 categories = []
 draft = false
 +++
