@@ -162,15 +162,15 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">encodePattern</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">width</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">gray</span> <span class="o">=</span> <span class="n">binaryToGray</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>              <span class="c1">// 坐标x转为格雷码
-</span><span class="c1"></span>            <span class="kt">bool</span> <span class="n">one</span> <span class="o">=</span> <span class="p">(</span><span class="n">gray</span> <span class="o">&gt;&gt;</span> <span class="n">idx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">;</span>            <span class="c1">// 第idx位是否是1
-</span><span class="c1"></span>            <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">].</span><span class="n">color</span> <span class="o">=</span> <span class="n">one</span> <span class="o">?</span> <span class="nl">white</span> <span class="p">:</span> <span class="n">black</span><span class="p">;</span> <span class="c1">// 像素点颜色
-</span><span class="c1"></span>        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">encodePattern(idx) {
+    for (y = 0 : height - 1) {
+        for (x = 0 : width -1) {
+            int gray = binaryToGray(x);              // 坐标x转为格雷码
+            bool one = (gray &gt;&gt; idx) &amp; 1;            // 第idx位是否是1
+            image[x, y].color = one ? white : black; // 像素点颜色
+        }
+    }
+}
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="/media/show-3d-test/db7004920e45dd5eb4ada9b0afaedda0.png" alt=""></p>
@@ -197,24 +197,24 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">decodePattern</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">images</span><span class="p">.</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">width</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kt">bool</span> <span class="n">one</span> <span class="o">=</span> <span class="n">isPixelWhite</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]);</span> <span class="c1">// 判断该像素点编码为0还是1
-</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="n">one</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">pattern</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">|=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">idx</span><span class="p">;</span>               <span class="c1">// 第idx位赋1
-</span><span class="c1"></span>                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">decodePattern(images) {
+    for (idx = 0 : images.size) {
+        for (y = 0 : height - 1) {
+            for (x = 0 : width -1) {
+                bool one = isPixelWhite(images[idx][x, y]); // 判断该像素点编码为0还是1
+                if (one) {
+                    pattern[x, y] |= 1 &lt;&lt; idx;               // 第idx位赋1
+                }
+            }
+        }
+    }
 
-    <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">width</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">pattern</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">grayToBinary</span><span class="p">(</span><span class="n">pattern</span><span class="p">);</span>          <span class="c1">// 格雷码转二进制
-</span><span class="c1"></span>        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    for (y = 0 : height - 1) {
+        for (x = 0 : width -1) {
+            pattern[x, y] = grayToBinary(pattern);          // 格雷码转二进制
+        }
+    }
+}
 </code></pre></td></tr></table>
 </div>
 </div><p>由于解码后的像素映射关系图需要用到3D渲染，我们将像素坐标值int型压缩到颜色rgba，即rg共16位表示x，ba共16位表示y，这样解码结果就变成了一张纹理贴图，从而方便后续的shader处理。</p>
@@ -227,12 +227,12 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">uchar</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">];</span>
-<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternX</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>       <span class="c1">// r
-</span><span class="c1"></span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternX</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>     <span class="c1">// g
-</span><span class="c1"></span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternY</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>       <span class="c1">// b
-</span><span class="c1"></span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">patternY</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>     <span class="c1">// a
-</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">uchar *p = image[x, y];
+p[0] = patternX &gt;&gt; 8;       // r
+p[1] = patternX &amp; 0xFF;     // g
+p[2] = patternY &gt;&gt; 8;       // b
+p[3] = patternY &amp; 0xFF;     // a
+</code></pre></td></tr></table>
 </div>
 </div><p>最终得到的结果图如下，由于x、y压缩到r、g、b、a，所以图片看起来是有断纹的，实际坐标值是连续变化的。</p>
 <p><img src="/media/show-3d-test/a48990e5588a2aa4d25caab10ad3e6c7.png" alt=""></p>
@@ -247,9 +247,9 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">_frameBuffer</span> <span class="o">=</span> <span class="n">FrameBuffer</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&#34;PostProcess&#34;</span><span class="p">,</span> <span class="n">FRAMEBUFFER_WIDTH</span><span class="p">,</span> <span class="n">FRAMEBUFFER_HEIGHT</span><span class="p">);</span>
-<span class="n">DepthStencilTarget</span><span class="o">*</span> <span class="n">dst</span> <span class="o">=</span> <span class="n">DepthStencilTarget</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&#34;PostProcess&#34;</span><span class="p">,</span> <span class="n">DepthStencilTarget</span><span class="o">::</span><span class="n">DEPTH_STENCIL</span><span class="p">,</span> <span class="n">FRAMEBUFFER_WIDTH</span><span class="p">,</span> <span class="n">FRAMEBUFFER_HEIGHT</span><span class="p">);</span>
-<span class="n">_frameBuffer</span><span class="o">-&gt;</span><span class="n">setDepthStencilTarget</span><span class="p">(</span><span class="n">dst</span><span class="p">);</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">_frameBuffer = FrameBuffer::create(&#34;PostProcess&#34;, FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
+DepthStencilTarget* dst = DepthStencilTarget::create(&#34;PostProcess&#34;, DepthStencilTarget::DEPTH_STENCIL, FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
+_frameBuffer-&gt;setDepthStencilTarget(dst);
 </code></pre></td></tr></table>
 </div>
 </div><p>然后创建后处理纹理</p>
@@ -263,12 +263,12 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Material</span><span class="o">*</span> <span class="n">material</span> <span class="o">=</span> <span class="n">Material</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">materialPath</span><span class="p">);</span>
-<span class="n">Texture</span><span class="o">::</span><span class="n">Sampler</span><span class="o">*</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">Texture</span><span class="o">::</span><span class="n">Sampler</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">srcBuffer</span><span class="o">-&gt;</span><span class="n">getRenderTarget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getTexture</span><span class="p">());</span>
-<span class="n">material</span><span class="o">-&gt;</span><span class="n">getParameter</span><span class="p">(</span><span class="s">&#34;u_texture&#34;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">sampler</span><span class="p">);</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Material* material = Material::create(materialPath);
+Texture::Sampler* sampler = Texture::Sampler::create(srcBuffer-&gt;getRenderTarget()-&gt;getTexture());
+material-&gt;getParameter(&#34;u_texture&#34;)-&gt;setValue(sampler);
 
-<span class="n">Mesh</span><span class="o">*</span> <span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="o">::</span><span class="n">createQuadFullscreen</span><span class="p">();</span>
-<span class="n">_quadModel</span> <span class="o">=</span> <span class="n">Model</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">mesh</span><span class="p">);</span>
+Mesh* mesh = Mesh::createQuadFullscreen();
+_quadModel = Model::create(mesh);
 </code></pre></td></tr></table>
 </div>
 </div><p>渲染过程：</p>
@@ -291,21 +291,21 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Rectangle</span> <span class="n">defaultViewport</span> <span class="o">=</span> <span class="n">getViewport</span><span class="p">();</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Rectangle defaultViewport = getViewport();
 
-<span class="c1">// draw into the framebuffer
-</span><span class="c1"></span><span class="n">setViewport</span><span class="p">(</span><span class="n">Rectangle</span><span class="p">(</span><span class="n">FRAMEBUFFER_WIDTH</span><span class="p">,</span> <span class="n">FRAMEBUFFER_HEIGHT</span><span class="p">));</span>
-<span class="n">FrameBuffer</span><span class="o">*</span> <span class="n">previousFrameBuffer</span> <span class="o">=</span> <span class="n">_frameBuffer</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">();</span>
+// draw into the framebuffer
+setViewport(Rectangle(FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT));
+FrameBuffer* previousFrameBuffer = _frameBuffer-&gt;bind();
 
-<span class="c1">// main scene
-</span><span class="c1"></span><span class="n">_scene</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">();</span>
+// main scene
+_scene-&gt;draw();
 
-<span class="c1">// post process
-</span><span class="c1"></span><span class="n">setViewport</span><span class="p">(</span><span class="n">defaultViewport</span><span class="p">);</span>      
-<span class="n">previousFrameBuffer</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">();</span>
+// post process
+setViewport(defaultViewport);      
+previousFrameBuffer-&gt;bind();
 
-<span class="n">clear</span><span class="p">(</span><span class="n">CLEAR_COLOR</span><span class="p">,</span> <span class="n">Vector4</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">_quadModel</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">();</span>
+clear(CLEAR_COLOR, Vector4(0, 0, 0, 1), 1.0f, 0);
+_quadModel-&gt;draw();
 </code></pre></td></tr></table>
 </div>
 </div><p>其中用于形变映射的shader:</p>
@@ -330,23 +330,23 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifdef OPENGL_ES
-</span><span class="cp"></span><span class="n">precision</span> <span class="n">highp</span> <span class="kt">float</span><span class="p">;</span>
-<span class="cp">#endif
-</span><span class="cp"></span>
-<span class="c1">// Uniforms
-</span><span class="c1"></span><span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">u_texture</span><span class="p">;</span>
-<span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">u_mapTexture</span><span class="p">;</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#ifdef OPENGL_ES
+precision highp float;
+#endif
 
-<span class="c1">// Inputs
-</span><span class="c1"></span><span class="n">varying</span> <span class="n">vec2</span> <span class="n">v_texCoord</span><span class="p">;</span>
+// Uniforms
+uniform sampler2D u_texture;
+uniform sampler2D u_mapTexture;
 
-<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">vec4</span> <span class="n">map</span> <span class="o">=</span> <span class="n">texture2D</span><span class="p">(</span><span class="n">u_mapTexture</span><span class="p">,</span> <span class="n">v_texCoord</span><span class="p">);</span>
-    <span class="n">vec2</span> <span class="n">mapUV</span> <span class="o">=</span> <span class="n">vec2</span><span class="p">((</span><span class="n">map</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="mf">256.0</span> <span class="o">+</span> <span class="n">map</span><span class="p">.</span><span class="n">g</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">,</span> <span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="n">r</span> <span class="o">*</span> <span class="mf">256.0</span> <span class="o">+</span> <span class="n">map</span><span class="p">.</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">);</span>
-    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">texture2D</span><span class="p">(</span><span class="n">u_texture</span><span class="p">,</span> <span class="n">mapUV</span><span class="p">);</span>
-<span class="p">}</span>
+// Inputs
+varying vec2 v_texCoord;
+
+void main()
+{
+    vec4 map = texture2D(u_mapTexture, v_texCoord);
+    vec2 mapUV = vec2((map.b * 256.0 + map.g) / 4.0, (map.r * 256.0 + map.a) / 4.0);
+    gl_FragColor = texture2D(u_texture, mapUV);
+}
 </code></pre></td></tr></table>
 </div>
 </div><p>u_texture是3D场景正常渲染的画面，u_mapTexture是结构光解码后的像素映射图，mapUV的计算则是将rgba解压为x、y坐标(u、v)，如下左右分别是形变前和形变后的图像。</p>
@@ -378,7 +378,11 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
           <a href="/tags/%E6%8A%80%E6%9C%AF/">技术</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/depthy-pic/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">让照片动起来</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/shitan-travel/">
             <span class="next-text nav-default">春游石潭村</span>
             <span class="next-text nav-mobile">Next</span>

@@ -6,10 +6,19 @@
     <description>Recent content in 3D on 无悬</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 02 Jul 2018 22:54:08 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 07 Dec 2018 21:43:53 +0800</lastBuildDate>
     
 	<atom:link href="https://robot9.me/tags/3d/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>让照片动起来</title>
+      <link>https://robot9.me/post/depthy-pic/</link>
+      <pubDate>Fri, 07 Dec 2018 21:43:53 +0800</pubDate>
+      
+      <guid>https://robot9.me/post/depthy-pic/</guid>
+      <description>Facebook最近推出了“3D照片”功能，让普通的照片能有3D显示效果：可以随着手机姿态的变化显示照片的不同视角，打开链接即可体验 (手机上</description>
+    </item>
     
     <item>
       <title>裸眼3D小实验</title>
@@ -21,7 +30,7 @@
     </item>
     
     <item>
-      <title>3d Reconstruction Overview</title>
+      <title>一个知乎回答</title>
       <link>https://robot9.me/post/3d-reconstruction-overview/</link>
       <pubDate>Tue, 17 Feb 2015 12:32:02 +0800</pubDate>
       
@@ -30,7 +39,7 @@
     </item>
     
     <item>
-      <title>3d Reconstruction Test</title>
+      <title>3D重建实验</title>
       <link>https://robot9.me/post/3d-reconstruction-test/</link>
       <pubDate>Tue, 18 Feb 2014 19:55:58 +0800</pubDate>
       
@@ -39,7 +48,7 @@
     </item>
     
     <item>
-      <title>Hello 3d Reconstruction</title>
+      <title>Hello 3D重建</title>
       <link>https://robot9.me/post/hello-3d-reconstruction/</link>
       <pubDate>Fri, 05 Jul 2013 11:36:05 +0800</pubDate>
       

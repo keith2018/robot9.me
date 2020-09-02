@@ -32,7 +32,7 @@ Kinect和iPhoneX的人脸ID都用到了结构光技术，其主要用于3D重建
 
 格雷码结构光生成的伪代码(x轴)：
 
-``` cpp
+```
 encodePattern(idx) {
     for (y = 0 : height - 1) {
         for (x = 0 : width -1) {
@@ -48,7 +48,7 @@ encodePattern(idx) {
 
 解码的伪代码(x轴)：
 
-``` cpp
+```
 decodePattern(images) {
     for (idx = 0 : images.size) {
         for (y = 0 : height - 1) {
@@ -71,7 +71,7 @@ decodePattern(images) {
 
 由于解码后的像素映射关系图需要用到3D渲染，我们将像素坐标值int型压缩到颜色rgba，即rg共16位表示x，ba共16位表示y，这样解码结果就变成了一张纹理贴图，从而方便后续的shader处理。
 
-``` cpp
+```
 uchar *p = image[x, y];
 p[0] = patternX >> 8;       // r
 p[1] = patternX & 0xFF;     // g
@@ -91,7 +91,7 @@ p[3] = patternY & 0xFF;     // a
 
 首先创建FrameBuffer
 
-``` cpp
+```
 _frameBuffer = FrameBuffer::create("PostProcess", FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
 DepthStencilTarget* dst = DepthStencilTarget::create("PostProcess", DepthStencilTarget::DEPTH_STENCIL, FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
 _frameBuffer->setDepthStencilTarget(dst);
@@ -99,7 +99,7 @@ _frameBuffer->setDepthStencilTarget(dst);
 
 然后创建后处理纹理
 
-``` cpp
+```
 Material* material = Material::create(materialPath);
 Texture::Sampler* sampler = Texture::Sampler::create(srcBuffer->getRenderTarget()->getTexture());
 material->getParameter("u_texture")->setValue(sampler);
@@ -110,7 +110,7 @@ _quadModel = Model::create(mesh);
 
 渲染过程：
 
-``` cpp
+```
 Rectangle defaultViewport = getViewport();
 
 // draw into the framebuffer
@@ -130,7 +130,7 @@ _quadModel->draw();
 
 其中用于形变映射的shader:
 
-``` c
+```
 #ifdef OPENGL_ES
 precision highp float;
 #endif

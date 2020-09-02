@@ -1,5 +1,5 @@
 +++
-title = "About Dimension"
+title = "关于维度"
 date = 2014-11-21T13:30:14+08:00
 images = []
 tags = []

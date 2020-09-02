@@ -1,5 +1,5 @@
 +++
-title = "Hello 3d Reconstruction"
+title = "Hello 3D重建"
 date = 2013-07-05T11:36:05+08:00
 images = []
 tags = ["3D", "技术"]
